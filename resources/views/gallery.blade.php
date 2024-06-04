@@ -20,7 +20,7 @@
             @foreach ($images as $image)
                 <div class="col-md-4">
                     <div class="card mb-4 shadow-sm">
-                        <img src="{{ route('image.show', $image->id) }}" class="card-img-top" alt="...">
+                        <img src="{{ route('image.show', $image->id) }}" class="card-img-top" alt="{{ $image->filename }}">
                         <div class="card-body">
                             <form action="{{ route('image.delete', $image->id) }}" method="POST">
                                 @csrf

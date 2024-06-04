@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Storage;
 use App\Models\Image;
 
 class ImageController extends Controller
@@ -15,11 +14,13 @@ class ImageController extends Controller
             'image' => 'required|image|mimes:jpg,jpeg,png|max:2048',
         ]);
 
-        $path = $request->file('image')->store('images', 'public');
+        $file = $request->file('image');
 
         $image = new Image();
         $image->user_id = Auth::id();
-        $image->path = $path;
+        $image->filename = $file->getClientOriginalName();
+        $image->mime = $file->getClientMimeType();
+        $image->data = file_get_contents($file->getRealPath());
         $image->save();
 
         return redirect()->back()->with('success', 'Image uploaded successfully!');
@@ -39,7 +40,6 @@ class ImageController extends Controller
             return redirect()->back()->with('error', 'Unauthorized action.');
         }
 
-        Storage::disk('public')->delete($image->path);
         $image->delete();
 
         return redirect()->back()->with('success', 'Image deleted successfully!');
@@ -53,15 +53,8 @@ class ImageController extends Controller
             abort(403, 'Unauthorized action.');
         }
 
-        $path = storage_path('app/public/' . $image->path);
-
-        if (!file_exists($path)) {
-            abort(404);
-        }
-
-        $file = file_get_contents($path);
-        $type = mime_content_type($path);
-
-        return response($file, 200)->header('Content-Type', $type);
+        return response($image->data, 200)
+            ->header('Content-Type', $image->mime)
+            ->header('Content-Disposition', 'inline; filename="'.$image->filename.'"');
     }
 }

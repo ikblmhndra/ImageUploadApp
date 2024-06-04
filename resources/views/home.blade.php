@@ -8,7 +8,7 @@
                 <div class="card-header">{{ __('Dashboard') }}</div>
                 <form action="{{ route('image.upload') }}" method="POST" enctype="multipart/form-data">
                     @csrf
-                    <input type="file" name="image" accept="image/*" required>
+                    <input type="file" name="image">
                     <button type="submit">Upload</button>
                 </form>  
                 <div class="card-body">
