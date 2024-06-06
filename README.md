@@ -1,3 +1,80 @@
+# Secure Image
+Uploading Web Application
+
+# Development
+
+For the backend I use PHP with Laravel Framework and the front end uses Reactjs.
+
+# Setup
+
+## **Prerequisite: Install MySQL (Docker)**
+
+**Downloading the official MySQL Docker Image**
+
+We will start by downloading the official MySQL Docker image with the following command:
+
+```
+docker pull mysql:latest
+```
+
+**Running and Managing a MySQL Server Container**
+
+Now, let’s create our first container from the `mysql` image. Here is the command we will use:
+
+```jsx
+docker run -d --name test-mysql -e MYSQL_ROOT_PASSWORD=strong_password -p 3307:3306 mysql
+```
+
+## **Clone and Install dependencies**
+
+Clone Repo
+
+```jsx
+git clone https://github.com/ikblmhndra/ImageUploadApp.git
+```
+
+Create environment 
+
+```jsx
+cp .env.example .env
+```
+
+Setup your environment  database
+
+```jsx
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=<Database name>
+DB_USERNAME=<Database User>
+DB_PASSWORD=<Database Password>
+```
+
+Install dependencies
+
+```jsx
+composer install
+```
+
+Create app key
+
+```jsx
+php artisan key:generate
+```
+
+Migrate database table
+
+```jsx
+php artisan migrate
+```
+
+Run the app
+
+```jsx
+php artisan serve
+```
+
+
 <p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
 <p align="center">
