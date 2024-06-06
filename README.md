@@ -1,5 +1,4 @@
-# Secure Image
-Uploading Web Application
+# Secure Image Uploading Web Application
 
 # Development
 
